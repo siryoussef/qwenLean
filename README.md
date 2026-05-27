@@ -31,6 +31,21 @@ sudo dnf install qwen-studio-2.2.2.x86_64.rpm
 qwen-studio
 ```
 
+### Option 3: Nix (Flakes)
+
+If you use Nix, you can run Qwen Studio directly or add it to your configuration:
+
+```bash
+# Run directly
+nix run github:youssefvdel/qwen-studio
+
+# Install with Flakes
+# Add to your flake inputs:
+# inputs.qwen-studio.url = "github:youssefvdel/qwen-studio";
+```
+
+A **NixOS module** and **Home Manager module** are also provided in the flake.
+
 [All Downloads](https://github.com/youssefvdel/qwen-studio/releases)
 
 ---
@@ -137,6 +152,14 @@ sequenceDiagram
 
 ### Install & Run
 
+Using **Nix + devenv** (recommended for Nix users):
+```bash
+direnv allow # or run 'devenv shell'
+npm install
+npm run tauri:dev
+```
+
+Standard install:
 ```bash
 git clone https://github.com/youssefvdel/qwen-studio.git
 cd qwen-studio
