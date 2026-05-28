@@ -15,6 +15,11 @@ in {
   };
 
   config = mkIf cfg.enable {
+    nixpkgs.overlays = [
+      (final: prev: {
+        qwen-studio = final.callPackage ./package.nix { };
+      })
+    ];
     home.packages = [ cfg.package ];
   };
 }
