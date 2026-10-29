@@ -14,6 +14,7 @@
   nodejs,
   npmHooks,
   fetchNpmDeps,
+  gst_all_1,
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
     pname = "qwen-studio";
