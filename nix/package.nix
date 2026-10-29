@@ -93,11 +93,18 @@ rustPlatform.buildRustPackage (finalAttrs: {
       --replace-fail "/usr/bin/env node" "${nodejs}/bin/node"
 
     # Wrap the binary to set the bridge path and ensure node is in PATH.
-    # We also add the library path for appindicator which is loaded via dlopen.
+    # We also add the library path for appindicator which is loaded via dlopen,
+    # and provide all GStreamer plugin paths so WebKitGTK can render media/HTML properly.
     wrapProgram $out/bin/qwen-studio \
       --set QWEN_STUDIO_BRIDGE_PATH "$out/share/qwen-studio/mcp-bridge.mjs" \
       --prefix PATH : "${lib.makeBinPath [ nodejs ]}" \
-      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ libayatana-appindicator libappindicator-gtk3 ]}"
+      --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [ libayatana-appindicator libappindicator-gtk3 ]}" \
+      --prefix GST_PLUGIN_SYSTEM_PATH_1_0 : "${lib.makeSearchPath "lib/gstreamer-1.0" [
+        gst_all_1.gstreamer
+        gst_all_1.gst-plugins-base
+        gst_all_1.gst-plugins-good
+        gst_all_1.gst-plugins-bad
+      ]}"
   '';
 
     meta = {
